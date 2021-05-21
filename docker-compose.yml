@@ -1,0 +1,35 @@
+version: "3.3"
+
+services:
+  pg-keycloak:
+    image: "postgres:13-alpine"
+    container_name: pg-keycloak
+    volumes:
+      - "pg-keycloak-data:/var/lib/postgresql/data"
+    restart: always
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloakdb
+      POSTGRES_PASSWORD: keycloakdb
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:13.0.0
+    ports:
+      - "7001:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin
+      - PROXY_ADDRESS_FORWARDING=true
+      - DB_USER=keycloakdb
+      - DB_PASSWORD=keycloakdb
+      - DB_ADDR=pg-keycloak
+      - DB_VENDOR=postgres
+
+# TODO fix URL resolving (docker specific issue)
+#  web-app:
+#    build: .
+#    ports:
+#      - "7000:7000"
+
+volumes:
+  pg-keycloak-data:

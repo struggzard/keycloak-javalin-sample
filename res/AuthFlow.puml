@@ -1,0 +1,24 @@
+@startuml
+title sample app flow
+
+actor user
+participant WebAppEntry as "WebApp /"
+participant KeyCloakAuth as "KeyCloak /auth"
+participant WebAppAuthCheck as "WebApp /auth-Check"
+participant KeyCloakToken as "KeyCloak /token"
+
+
+autonumber
+
+user -> WebAppEntry: opens home page
+WebAppEntry -> WebAppEntry: check token existence
+WebAppEntry -> KeyCloakAuth: request for auth code
+KeyCloakAuth -> user: asks for credentials
+KeyCloakAuth <-- user: provides credentials
+KeyCloakAuth -> WebAppAuthCheck: redirects with auth code
+WebAppAuthCheck -> KeyCloakToken: request for token data
+WebAppAuthCheck <-- KeyCloakToken: response token data
+WebAppAuthCheck --> WebAppEntry: redirects to home page with token
+WebAppEntry --> user: prints token
+
+@enduml

@@ -3,6 +3,8 @@ A basic sample of keyCloak integration into javalin webapp.
 
 This is a sample application for learning purpose only.
 
+![Sample App Flow](https://github.com/struggzard/keycloak-javalin-sample/blob/main/res/AuthFlow-sample_app_flow.png "sample app flow")
+
 ## Build Application
 Maven is used as a build tool thus application can be build with following command:
 ```
